@@ -1,0 +1,87 @@
+<html>
+<head>
+    <title>iisnode logs</title>
+    <style type="text/css">
+        body
+        {
+            font-family: "Trebuchet MS" , Arial, Helvetica, sans-serif;
+        }
+        table
+        {
+            border-collapse: collapse;
+        }
+        td, th
+        {
+            border: 1px solid lightgray;
+            padding: 3px 7px 2px 7px;
+        }
+        th
+        {
+            text-align: left;
+            padding-top: 5px;
+            padding-bottom: 4px;
+            background-color: Gray;
+            color: #ffffff;
+        }
+        td.stderr
+        {
+            color: Red;
+        }
+    </style>
+</head>
+<body>
+    <table id="logFilesTable">
+        <tr>
+            <th>
+                Computer name
+            </th>
+            <th>
+                PID
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                Link
+            </th>
+        </tr>
+    </table>
+    <p id="lastUpdated"></p>
+    <script type="text/javascript">
+
+        // this is replaced with actual data at runtime by code in interceptor.js
+        var logFiles = [{"file":"DESKTOP-3LOGEHA-10088-stderr-1591039804082.txt","computername":"DESKTOP-3LOGEHA","pid":10088,"type":"stderr","created":1591039804082},{"file":"DESKTOP-3LOGEHA-10088-stdout-1591039804080.txt","computername":"DESKTOP-3LOGEHA","pid":10088,"type":"stdout","created":1591039804080},{"file":"DESKTOP-3LOGEHA-1300-stderr-1591078586410.txt","computername":"DESKTOP-3LOGEHA","pid":1300,"type":"stderr","created":1591078586410},{"file":"DESKTOP-3LOGEHA-1300-stdout-1591078586406.txt","computername":"DESKTOP-3LOGEHA","pid":1300,"type":"stdout","created":1591078586406},{"file":"DESKTOP-3LOGEHA-14400-stderr-1591078389317.txt","computername":"DESKTOP-3LOGEHA","pid":14400,"type":"stderr","created":1591078389317},{"file":"DESKTOP-3LOGEHA-14400-stdout-1591078389314.txt","computername":"DESKTOP-3LOGEHA","pid":14400,"type":"stdout","created":1591078389314},{"file":"DESKTOP-3LOGEHA-152-stderr-1591078637608.txt","computername":"DESKTOP-3LOGEHA","pid":152,"type":"stderr","created":1591078637608},{"file":"DESKTOP-3LOGEHA-152-stdout-1591078637604.txt","computername":"DESKTOP-3LOGEHA","pid":152,"type":"stdout","created":1591078637604},{"file":"DESKTOP-3LOGEHA-16200-stderr-1591081272748.txt","computername":"DESKTOP-3LOGEHA","pid":16200,"type":"stderr","created":1591081272748},{"file":"DESKTOP-3LOGEHA-16200-stdout-1591081272742.txt","computername":"DESKTOP-3LOGEHA","pid":16200,"type":"stdout","created":1591081272742},{"file":"DESKTOP-3LOGEHA-3852-stderr-1591078451781.txt","computername":"DESKTOP-3LOGEHA","pid":3852,"type":"stderr","created":1591078451781},{"file":"DESKTOP-3LOGEHA-3852-stdout-1591078451779.txt","computername":"DESKTOP-3LOGEHA","pid":3852,"type":"stdout","created":1591078451779},{"file":"DESKTOP-3LOGEHA-4784-stderr-1591078432276.txt","computername":"DESKTOP-3LOGEHA","pid":4784,"type":"stderr","created":1591078432276},{"file":"DESKTOP-3LOGEHA-4784-stdout-1591078432273.txt","computername":"DESKTOP-3LOGEHA","pid":4784,"type":"stdout","created":1591078432273},{"file":"DESKTOP-3LOGEHA-5632-stderr-1591041377909.txt","computername":"DESKTOP-3LOGEHA","pid":5632,"type":"stderr","created":1591041377909},{"file":"DESKTOP-3LOGEHA-5632-stdout-1591041377907.txt","computername":"DESKTOP-3LOGEHA","pid":5632,"type":"stdout","created":1591041377907},{"file":"DESKTOP-3LOGEHA-7028-stderr-1591080855800.txt","computername":"DESKTOP-3LOGEHA","pid":7028,"type":"stderr","created":1591080855800},{"file":"DESKTOP-3LOGEHA-7028-stdout-1591080855795.txt","computername":"DESKTOP-3LOGEHA","pid":7028,"type":"stdout","created":1591080855795},{"file":"DESKTOP-3LOGEHA-7508-stderr-1591080665594.txt","computername":"DESKTOP-3LOGEHA","pid":7508,"type":"stderr","created":1591080665594},{"file":"DESKTOP-3LOGEHA-7508-stdout-1591080665588.txt","computername":"DESKTOP-3LOGEHA","pid":7508,"type":"stdout","created":1591080665588},{"file":"DESKTOP-3LOGEHA-8260-stderr-1591042308426.txt","computername":"DESKTOP-3LOGEHA","pid":8260,"type":"stderr","created":1591042308426},{"file":"DESKTOP-3LOGEHA-8260-stdout-1591042308422.txt","computername":"DESKTOP-3LOGEHA","pid":8260,"type":"stdout","created":1591042308422}];
+        var lastUpdated = 1591081273248;
+        var date = new Date();
+
+        date.setTime(lastUpdated);
+        document.getElementById('lastUpdated').innerHTML = 'Index was last updated ' + date;
+
+        logFiles.sort(function (a, b) {
+            return b.created - a.created;
+        });
+
+        var logFilesTable = document.getElementById("logFilesTable");
+        for (var i = 0; i < logFiles.length; i++) {
+            var logFile = logFiles[i];
+            date.setTime(logFile.created);
+            var row = logFilesTable.insertRow(-1);
+            var computerNameCell = row.insertCell(0);
+            var pidCell = row.insertCell(1);
+            var typeCell = row.insertCell(2);
+            var dateCell = row.insertCell(3);
+            var logCell = row.insertCell(4);
+            computerNameCell.innerHTML = logFile.computername;
+            pidCell.innerHTML = logFile.pid.toString();
+            typeCell.innerHTML = logFile.type;
+            typeCell.setAttribute('class', logFile.type);
+            dateCell.innerHTML = date.toString();
+            logCell.innerHTML = '<a href="' + logFile.file + '">log</a>';
+        };
+
+    </script>
+</body>
+</html>
