@@ -5,25 +5,25 @@ var passport = require('passport');
 var WindowsStrategy = require('passport-windowsauth');
 
 var app = express();
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
+// passport.serializeUser(function(user, done) {
+//     done(null, user);
+// });
 
-passport.deserializeUser(function(user, done) {
-    done(null, user);
-});
+// passport.deserializeUser(function(user, done) {
+//     done(null, user);
+// });
 
-passport.use(new WindowsStrategy({
-    integrated: true 
-}, function(profile,done) {
-    var user = {
-        id: profile.id,
-    };
-    done(null, user);
-}));
+// passport.use(new WindowsStrategy({
+//     integrated: true 
+// }, function(profile,done) {
+//     var user = {
+//         id: profile.id,
+//     };
+//     done(null, user);
+// }));
 
 
 
@@ -46,9 +46,9 @@ app.use(bodyParser.json());
 //     });
 // });
 
-app.all("*", passport.authenticate("WindowsAuthentication"), function (request,response,next){
-    next();
-});
+// app.all("*", passport.authenticate("WindowsAuthentication"), function (request,response,next){
+//     next();
+// });
 app.get('/', function(req, res){
    
     
@@ -56,8 +56,11 @@ app.get('/', function(req, res){
 });
 
 app.get('/test', function (req, res) {
-    var username = req.headers['x-iisnode-_user'] || 'test';
-    res.send('Hello from foo! [express sample] =>' + username);
+    var username = req.headers['x-iisnode-logon_user'];
+    if(username === undefined || username === ''){
+        return res.status(403).json({'message': 'done dona done'})
+    }
+    res.send('Hello from foo! [express sample] =>' + username.split('\\')[1]);
 });
 
 // app.get("/api/testAuthentication", function(request, response){
