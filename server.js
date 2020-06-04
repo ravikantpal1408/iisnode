@@ -60,7 +60,7 @@ app.get('/test', function (req, res) {
     if(username === undefined || username === ''){
         return res.status(403).json({'message': 'done dona done'})
     }
-    res.send('Hello from foo! [express sample] =>' + username.split('\\')[1]);
+    res.status(200).json( {'username': username.split('\\')[1]} );
 });
 
 // app.get("/api/testAuthentication", function(request, response){

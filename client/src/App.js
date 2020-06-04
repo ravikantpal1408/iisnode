@@ -1,8 +1,19 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+const [message, setMessage] = useState({})
+useEffect(()=>{
+  fetch('http://192.168.1.5/test',{mode: 'no-cors'})
+    .then(res=> res.json())
+    .then(data=> {
+      console.log('hello', data);
+      setMessage(data.username);
+
+}).catch(err=>console.log(err))
+},[setMessage])
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,7 +27,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+         {message.toString()}
         </a>
       </header>
     </div>
